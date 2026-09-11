@@ -40,7 +40,7 @@ name="pororo"
 age=23
 
 print(f"이름: {name}, 나이: {age}")
-print(f"내년 나이: {name+1}살")
+print(f"내년 나이: {age+1}살")
 print(f"{name.upper()}")
 
 pi=3.141592

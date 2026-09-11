@@ -1,48 +1,50 @@
-#연산자
+# 연산자
 
-#산술 연사자
-a=10
-b=3
+# 산술 연사자
+a = 10
+b = 3
 
-print(a+b)
-print(a-b)
-print(a*b)
-print(a/b)
-print(a%b)
-print(a//b)
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)  # float
+print(a % b)  # 나머지
+print(a // b)  # 몫
 print(a**b)
 
-#복합 대입 연산자
-a+=4
+# 10/3=3
+print(10 / 2)
+
+# 복합 대입 연산자
+a += 4
 print(a)
 
-a-=10
+a -= 10
 print(a)
 
-#증감 연산자
-#a++
-a+=1
+# 증감 연산자
+# a++
+a += 1
 
-#비교 연산자
-print(3==3.0)
-print(3!=4)
-print("apple"<"apble")
-print(1<2<3) #1<2 and 2<3
-print(1<3<2)
+# 비교 연산자
+print(3 == 3.0)
+print(3 != 4)
+print("apple" < "apble")
+print(1 < 2 < 3)  # 1<2 and 2<3
+print(1 < 3 < 2)
 
-#논리 연산자(and or not)
+# 논리 연산자(and or not)
 print(True and True)
 print(True or False)
 print(not True)
 
-#Short-circuit test
-a=10
-b=0
+# Short-circuit test
+a = 10
+b = 0
 
-print(a/b)
+# print(a/b)
 
-if a>0 or a/b:
+if a > 0 or a / b:
     print("yes")
 else:
     print("no")
-    

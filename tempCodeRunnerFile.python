@@ -1,0 +1,3 @@
+a=0xb3b1fcf3
+b=0x7d1c4b0a
+print(b^a)
