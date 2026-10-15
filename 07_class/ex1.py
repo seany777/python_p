@@ -96,9 +96,20 @@ print(d1)
 #  -> 인스턴스 변수는 반드시 (객체)를 생성한 후 사용 가능
 # ===========================================================
 class Dog:
-    def init(self, name, age):
+    # 객체 생성 시 실행되어야 하는 로직 구형 (설정 파일 로드, DB 커넥션 설정)
+    # 생성자 역할: 객체 초기화
+    def __init__(self, name, age=1):
         self.name = name
-        self.age = age
+        if age < 0:
+            self.age = 0
+        else:
+            self.age = age
+
+    def bark(self):
+        print(f"{self.name} 멍멍")
+
+    def introduce(self):
+        print(f"저는 {self.age}살 {self.name}입니다")
 
 
 d1 = Dog("poppi", 6)
@@ -114,17 +125,21 @@ print(d1.name, d1.age)
 # ===========================================================
 #  7. 인스턴스 메소드
 #  - 인스턴스 변수에 접근하거나 다른 인스턴스 메소드를 호출할 수 있다.
-#  - 모든 인스턴스 메소드의 첫 번째 매개변수는 (  )로 작성한다.
+#  - 모든 인스턴스 메소드의 첫 번째 매개변수는 (self)로 작성한다.
 # ===========================================================
 
 # 인스턴스 메소드 호출
+d1.bark()
+d2.bark()
 
+d1.introduce()
+d2.introduce()
 
 # ===========================================================
 #  8. 클래스 변수
-#  - 객체가 아닌 클래스에 소속되어 모든 객체가 (  )하는 변수
+#  - 객체가 아닌 클래스에 소속되어 모든 객체가 (공유)하는 변수
 #  - 클래스 내부의 메소드 밖에 선언
-#  - (  )으로 접근 (객체명.변수명으로도 읽을 수는 있으나 비권장)
+#  - (클래스명.변수명)으로 접근 (객체명.변수명으로도 읽을 수는 있으나 비권장)
 #
 #  (중요) 인스턴스 변수 vs 클래스 변수
 #  - 인스턴스 변수 : self.변수명 / 객체마다 다른 값
@@ -132,29 +147,53 @@ print(d1.name, d1.age)
 # ===========================================================
 
 
-# 객체 생성 없이도 클래스 변수 사용 가능
+class Dog:
+    count = 0  # 클래스 변수(모든 dog객체가 공유)
+    species = "개"
 
+    def __init__(self, name, age):
+        self.name = name  # 인스턴스
+        self.age = age
+        Dog.count += 1
+
+    # 데코레이터: 기존 함수를 직접 수정하지 않고 함수에 기능을 추가하는 방법
+    @classmethod
+    def show_count(cls):
+        print(f"현재 {Dog.species}는 총 {Dog.count}개입니다")
+
+
+# 객체 생성 없이도 클래스 변수 사용 가능
+print(Dog.species)
+
+d1 = Dog("뽀삐", 6)
+d2 = Dog("보리", 5)
+
+print(d1.species, d2.species)
 
 # 클래스 변수를 바꾼 경우 아래 결과는?
+Dog.species = "강아지"
 
+print(d1.species, d2.species)
 
 # 주의) 객체를 사용하여 클래스 변수의 값을 변경한다면?
 # -> 클래스 변수가 바뀌는 게 아니라, 그 객체에 같은 이름의 인스턴스 변수가 새로 생긴다.
 # -> 클래스 변수는 클래스명.변수명으로 사용하기
-
+d1.species = "강아지"
+print(d1.species, d2.species)
+print(Dog.species)
 
 # Dog 클래스로 만든 전체 객체 수 세기
-
+print(Dog.count)
 
 # 클래스 메소드 호출: 클래스명.메소드명
-
+Dog.show_count()
 
 # ===========================================================
 # 문제)
-#  1. 클래스 메소드에서 self를 쓸 수 있을까? (  )
+#  1. 클래스 메소드에서 self를 쓸 수 있을까? (x )
 #  2. 메소드에서 변수 접근 허용 범위
-#   - 인스턴스 메소드에서 인스턴스 변수 사용 (  ), 클래스 변수 사용 (  )
-#   - 클래스 메소드에서 인스턴스 변수 사용 (  ), 클래스 변수 사용 (  )
+#   - 인스턴스 메소드에서 인스턴스 변수 사용 ( o ), 클래스 변수 사용 ( o )
+#   - 클래스 메소드에서 인스턴스 변수 사용 ( x ), 클래스 변수 사용 ( o )
 # ===========================================================
 
 
@@ -165,7 +204,23 @@ print(d1.name, d1.age)
 
 # Student Class 작성하기
 class Student:
-    pass
+    count = 0
+    school = "디미고"
+
+    def __init__(self, num, name):
+        self.num = num
+        self.name = name
+        Student.count += 1
+
+    def introduce(self):
+        print(f"저는 {self.num} {self.name}입니다")
+
+    def introduce2(self):
+        print(f"저는 {Student.school}에 재학중인 {self.num} {self.name}입니다")
+
+    @classmethod
+    def get_std_cnt(cls):
+        return Student.count
 
 
 # 1️⃣ 인스턴스 변수: num(학번), name(이름) -> 생성자 구현
@@ -173,22 +228,22 @@ class Student:
 
 # 2️⃣ 객체 생성: 생성자 호출
 
-# s1 = Student(1301, "뽀로로")
-# s2 = Student(1401, "크롱")
+s1 = Student(1301, "뽀로로")
+s2 = Student(1401, "크롱")
 
 
 # 3️⃣ 인스턴스 메소드: introduce() 구현
 
-# s1.introduce()                  # 저는 1301 뽀로로 입니다.
-# s2.introduce()                  # 저는 1401 크롱 입니다.
+s1.introduce()  # 저는 1301 뽀로로 입니다.
+s2.introduce()  # 저는 1401 크롱 입니다.
 
 
 # 4️⃣ 클래스 변수: school = "디미고" 추가 -> 인스턴스 메소드: introduce2() 구현
 
-# s1.introduce2()                 # 저는 디미고에 재학중인 1301 뽀로로 입니다.
-# s2.introduce2()                 # 저는 디미고에 재학중인 1401 크롱 입니다.
+s1.introduce2()  # 저는 디미고에 재학중인 1301 뽀로로 입니다.
+s2.introduce2()  # 저는 디미고에 재학중인 1401 크롱 입니다.
 
 
 # 5️⃣ 클래스 메소드: get_std_cnt() 구현 (총 학생 수 리턴)
 
-# print(f"총 학생 수: {Student.get_std_cnt()}명")   # 총 학생 수: 2명
+print(f"총 학생 수: {Student.get_std_cnt()}명")  # 총 학생 수: 2명

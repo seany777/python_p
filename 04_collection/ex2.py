@@ -29,10 +29,10 @@ print(langs.index("python"))  # "python" 인덱스 찾기
 langs.reverse()  # 리스트 순서를 거꾸로 뒤집기
 print(langs)
 
-langs.sort()  # 오름차순 정렬
+langs.sort()  # 오름차순 정렬x
 print(langs)
 
-langs.sort()  # 내림차순 정렬
+langs.sort(reverse=True)  # 내림차순 정렬
 print(langs)
 
 langs.clear()  # 모든 item 삭제
