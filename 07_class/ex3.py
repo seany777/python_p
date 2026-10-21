@@ -174,8 +174,8 @@ shapes = [Rectangle(3, 4), Circle(5), Triangle(6, 3)]
 
 # 4️⃣ 도형 넓이 출력 (반복문 사용)
 total = 0
-# 사각형 넓이: 12cm
-# 원 넓이: 78.5cm
+# 사각형:  넓이: 12cm
+# 원 넓이78.5cm
 # 삼각형 넓이: 9.0cm
 for a in shapes:
     total += a.area()
